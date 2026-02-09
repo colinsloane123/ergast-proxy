@@ -18,8 +18,10 @@ app.get("/proxy", async (req, res) => {
   try {
     // Force Ergast to return JSON instead of HTML
     const response = await fetch(targetUrl, {
-      headers: { "Accept": "application/json" }
-    });
+  headers: {
+    "Accept": "application/json, text/plain"
+  }
+});
 
     const data = await response.text();
 
