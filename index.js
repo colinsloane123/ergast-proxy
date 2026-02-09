@@ -5,6 +5,7 @@ import cors from "cors";
 const app = express();
 app.use(cors());
 
+// Use /proxy instead of / to avoid Render stripping query params
 app.get("/proxy", async (req, res) => {
   console.log("Incoming request:", req.query);
 
@@ -15,13 +16,20 @@ app.get("/proxy", async (req, res) => {
   }
 
   try {
-    const response = await fetch(targetUrl);
+    // Force Ergast to return JSON instead of HTML
+    const response = await fetch(targetUrl, {
+      headers: { "Accept": "application/json" }
+    });
+
     const data = await response.text();
 
     res.set("Content-Type", "application/json");
     res.send(data);
   } catch (error) {
-    res.status(500).json({ error: "Proxy request failed", details: error.message });
+    res.status(500).json({
+      error: "Proxy request failed",
+      details: error.message
+    });
   }
 });
 
