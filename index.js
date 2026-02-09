@@ -5,7 +5,9 @@ import cors from "cors";
 const app = express();
 app.use(cors());
 
-app.get("/", async (req, res) => {
+app.get("/proxy", async (req, res) => {
+  console.log("Incoming request:", req.query);
+
   const targetUrl = req.query.url;
 
   if (!targetUrl) {
