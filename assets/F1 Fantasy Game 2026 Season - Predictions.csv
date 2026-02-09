@@ -1,0 +1,16 @@
+F1 Round,Name,First Choice,Second Choice,Third Choice,Would you like to play your JOKER for double points?
+1,Colin,verstappen,Norris,Piastri,No
+1,David,Hamilton,Piastri,Norris,No
+1,Ian,Norris,Piastri,Verstappen,No
+1,Jane,Piastri,Norris,Hamilton,No
+1,James,Hamilton,Piastri,Norris,No
+2,David,Hamilton,Norris,Piastri,No
+2,Colin,Verstappen,Norris,Piastri,No
+2,Ian,Verstappen,Norris,Piastri,No
+2,Jane,Norris,Piastri,Hamilton,No
+2,James,Piastri,Norris,Verstappen,No
+3,Colin,Hamilton,Norris,Piastri,No
+3,David,Piastri,Verstappen,Norris,Yes
+3,Ian,Norris,Hamilton,Piastri,No
+3,Jane,Norris,Verstappen,Piastri,No
+3,James,Verstappen,Hamilton,Norris,No
