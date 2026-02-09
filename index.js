@@ -1,34 +1,27 @@
-import express from 'express';
-import fetch from 'node-fetch';
+import express from "express";
+import fetch from "node-fetch";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 
-app.get('/', async (req, res) => {
+app.get("/", async (req, res) => {
   const targetUrl = req.query.url;
 
   if (!targetUrl) {
-    return res.status(400).send('Missing "url" query parameter.');
+    return res.status(400).json({ error: "Missing 'url' query parameter" });
   }
 
   try {
-    const response = await fetch(targetUrl, {
-      headers: {
-        'User-Agent': 'ergast-proxy/1.0 (https://yourdomain.com)'
-      }
-    });
+    const response = await fetch(targetUrl);
+    const data = await response.text();
 
-    const contentType = response.headers.get('content-type') || 'text/plain';
-    const body = await response.text();
-
-    res.set('Content-Type', contentType);
-    res.status(response.status).send(body);
-  } catch (err) {
-    console.error('Proxy error:', err);
-    res.status(500).send(`Proxy error: ${err.message}`);
+    res.set("Content-Type", "application/json");
+    res.send(data);
+  } catch (error) {
+    res.status(500).json({ error: "Proxy request failed", details: error.message });
   }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Proxy listening on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Proxy running on port ${PORT}`));
