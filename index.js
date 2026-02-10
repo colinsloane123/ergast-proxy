@@ -23,10 +23,10 @@ app.get("/proxy", async (req, res) => {
   }
 });
 
-    const data = await response.text();
+    const data = await response.json();
 
     res.set("Content-Type", "application/json");
-    res.send(data);
+    res.json(data);
   } catch (error) {
     res.status(500).json({
       error: "Proxy request failed",
