@@ -17,16 +17,15 @@ app.get("/proxy", async (req, res) => {
   try {
     const response = await fetch(targetUrl, {
       headers: {
-        "Accept": "application/json, text/plain"
+        "Accept": "application/json, text/plain",
+        "User-Agent": "Mozilla/5.0"
       }
     });
 
-    // Read the body ONCE
     const raw = await response.text();
 
     let data;
 
-    // Try to parse JSON
     try {
       data = JSON.parse(raw);
     } catch {
