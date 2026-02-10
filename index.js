@@ -5,7 +5,6 @@ import cors from "cors";
 const app = express();
 app.use(cors());
 
-// Proxy endpoint
 app.get("/proxy", async (req, res) => {
   console.log("Incoming request:", req.query);
 
@@ -22,25 +21,19 @@ app.get("/proxy", async (req, res) => {
       }
     });
 
+    // Read the body ONCE
+    const raw = await response.text();
+
     let data;
 
-    // Try to parse JSON directly
+    // Try to parse JSON
     try {
-      data = await response.json();
+      data = JSON.parse(raw);
     } catch {
-      // If JSON parsing fails, fall back to text
-      const text = await response.text();
-
-      // Try to extract JSON from inside the text
-      try {
-        data = JSON.parse(text);
-      } catch {
-        // If still not JSON, return the raw HTML so we can debug
-        return res.status(500).json({
-          error: "Ergast did not return JSON",
-          raw: text
-        });
-      }
+      return res.status(500).json({
+        error: "Ergast did not return JSON",
+        raw: raw
+      });
     }
 
     res.json(data);
